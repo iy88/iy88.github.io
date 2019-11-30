@@ -16,6 +16,7 @@
     <div id="button">
         <button id="e" onclick="en()">encode</button>
         <button id="d" onclick="de()">decode</button>
+        <button id="sha256" onclick="se()">SHA256</button>
     </div>
     <script> 
         if(!browserRedirect()){
@@ -28,6 +29,10 @@
         function de(){
             let v = document.getElementById('i').value;
             document.getElementById('o').value=base64Decode(v);
+        }
+        function se(){
+            let v = document.getElementById('i').value;
+            document.getElementById('o').value=SHA256(v);
         }
     </script>
     <br>
