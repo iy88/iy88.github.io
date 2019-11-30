@@ -9,6 +9,7 @@
 </head>
 <body>
     <script src="base64.js"></script>
+    <script src="../script/login-pc.js"></script>
     <textarea id="i" placeholder="input"></textarea><br>
     <textarea id="o" placeholder="output"></textarea><br>
     <div id="button">
@@ -16,6 +17,9 @@
         <button id="d" onclick="de()">decode</button>
     </div>
     <script> 
+        if(!browserRedirect()){
+            window.location.href="https://iy88.gitee.io/ccc";
+        }
         function en(){
             let v = document.getElementById('i').value;
             document.getElementById('o').value=base64Encode(v);
