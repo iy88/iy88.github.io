@@ -1,0 +1,42 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+<title>login</title>
+<link rel="stylesheet" href="css/login.css" />
+</head>
+
+<body>
+<div class="login">
+	<div class="welcome"><img src="images/welcome.png"></div>
+	<div class="login-form">
+		<div class="login-inp"><label>账号</label><input type="text" placeholder="" id="u"></div>
+		<div class="login-inp"><label>密码</label><input type="password" placeholder="" id="p"></div>
+		<div class="login-inp"><a href="javascript:login()" >立即登录</a></div>
+	</div>
+</div>
+    <script>
+        var _hmt = _hmt || [];
+        (function () {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?934f809f6a6c3bb4b24d46b221f0045b";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+		<script type="text/javascript" src="../script/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript" src="../script/outjs.min.js"></script>
+    <script>
+        function login(event) {
+            let i = 0;
+            if (checkUserByNP(document.getElementById('u').value, document.getElementById('p').value)) {
+                  setCookie('user', 1, 2);
+                  window.location.href = "mainpage.html";
+            } else {
+                alert("用户名或密码错误!");
+            }
+        }
+    </script>
+</body>
+</html>

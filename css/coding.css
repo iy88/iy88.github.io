@@ -1,0 +1,46 @@
+#code,#result{
+    margin: 0px;
+    width:548px;
+    height: 611px;
+    color: rgb(1, 90, 255);
+    background: transparent;
+}
+
+body{
+    background-image: linear-gradient(to right ,#2cff2c,#0edbff);
+}
+#run{
+    width: 100px;
+    height: 30px;
+    font-size:16px;
+    color: rgb(0, 68, 255);
+    background-image: linear-gradient(to right,#8161ca,#00ff00);
+    border: 0px;
+    outline-color: #61ff06;
+}
+#clear,#time{
+    width:100px;
+    height: 30px;
+    font-size:16px;
+    color: rgb(0, 68, 255);
+    background-image: linear-gradient(to right,#8161ca,#00ff00);
+    border: 0px;
+    outline-color: #61ff06;
+    margin-top: 10px;
+}
+#clear:hover{
+    color: rgb(0, 68, 255);
+    background-image: linear-gradient(to right,#ff7300fd,#a200ff);
+}
+#time:hover{
+    color: rgb(0, 68, 255);
+    background-image: linear-gradient(to right,#ff7300fd,#a200ff); 
+}
+#run:hover{
+    color: rgb(0, 68, 255);
+    background-image: linear-gradient(to right,#ff7300fd,#a200ff);
+}
+#buttons{
+    float: right;
+    margin-top: 0px;
+}

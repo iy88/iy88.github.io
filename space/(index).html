@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>SpacePi</title>
+    <meta property="og:url" content="https://jackrugile.com/spacepi/">
+    <meta property="og:title" content="SpacePi">
+    <meta property="og:description" content="SpacePi is a mouse accuracy/agility game revolving around the defense of bases in the most desolate regions of space.">
+    <meta property="og:site_name" content="SpacePi">
+    <meta property="og:image" content="https://jackrugile.com/spacepi/images/fb.png">
+    <meta property="og:type" content="website">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div id="game-wrap">
+    <div id="loading"></div>
+    <div id="cover"></div>
+    <div id="bottom-nav">
+        <p>Toggle:</p>
+        <a href="#" id="toggle-pause">Pause</a>
+        <a href="#" id="toggle-music" class="">Music</a>
+        <a href="#" id="toggle-sound">Sound</a>
+        <a href="#" id="toggle-hud">HUD</a>
+        <a href="https://jackrugile.com/" target="_blank" id="credit-link">Jack Rugile</a>
+        <p id="credit">Created by:</p>
+    </div>
+    <div id="audio-select" class="menu">
+        <h1><strong>Space</strong>Pi</h1>
+        <div class="inner">
+            <div class="divider"></div>
+            <h3>Select Audio Settings</h3>
+            <a href="#" class="button" id="audio-true"><span>Play With Audio</span></a>
+            <a href="#" class="button" id="audio-false"><span>Play Without Audio</span></a>
+            <p>This can be changed later from the settings panel in the bottom left.</p>
+        </div>
+    </div>
+
+    <div id="main" class="menu">
+        <h1><strong>Space</strong>Pi</h1>
+
+        <div id="no-can">
+            <div class="divider"></div>
+            <p>Your browser does not support canvas. To play the game, download the latest version of a browser that supports canvas, such as <a href="https://google.com/chrome" target="_blank">Google Chrome</a> or <a href="http://mozilla.org/firefox" target="_blank">Mozilla Firefox</a>.</p>
+        </div>
+
+        <div id="home-wrap">
+            <div id="guide" class="clearfix">
+                <div class="divider"></div>
+                <div class="left">
+                    <h3>Overview</h3>
+                    <ul>
+                        <li><strong>Objective</strong> - Create lines to defend against enemy lines. Protect your base until it has grown to its target radius. Collect coins to purchase upgrades. Collect powerups to gain benefits:
+                            <span class="pwrup1">Slow Enemies<i class="tip">Enemy movement and spawning are slowed to half speed</i></span>,
+                            <span class="pwrup2">Unlimited Power<i class="tip">Unlimited line creation power</i></span>,
+                            <span class="pwrup3">Base Generation Boost<i class="tip">Base growth is doubled</i></span>, and
+                            <span class="pwrup4">Coin Scatter<i class="tip">Coins are scattered across the level</i></span>.
+                        </li>
+                        <li><strong>Controls</strong> - Click and drag to create defensive lines, which is limited by your available power. Press <strong>Space</strong> to pause.</li>
+                        <li><strong>Saving</strong> - Game data is saved automatically at the end of levels and after upgrade purchases.</li>
+                        <li><strong>Scoring</strong> - The lower the better. Beat the levels faster, create fewer lines, create shorter lines, and take less damage to get a better score.</li>
+                    </ul>
+                </div> <!-- end .left -->
+                <div id="map">
+                    <div class="completion">
+                        <span>Completion</span>
+                    </div>
+                    <div class="power">
+                        <span>Power</span>
+                    </div>
+                    <div class="score">
+                        <span>Score</span>
+                    </div>
+                    <div class="profit">
+                        <span>Profit</span>
+                    </div>
+                    <div class="base">
+                        <span>Base</span>
+                    </div>
+                    <div class="base-goal">
+                        <span>Target Radius</span>
+                    </div>
+                    <div class="good-line">
+                        <span>Defensive Line</span>
+                    </div>
+                    <div class="bad-line">
+                        <span>Enemy Line</span>
+                    </div>
+                </div>
+                <div class="divider"></div>
+            </div>
+
+            <a href="#" class="button" id="play-game-button"><span>Play Game</span></a>
+            <a href="#" class="button" id="overall-stats-button"><span>Overall Stats</span></a>
+            <a href="#" class="button" id="reset-game-data-button"><span>Reset Game Data</span></a>
+        </div><!-- end #home-wrap -->
+    </div>
+
+    <div id="pause" class="menu">
+        <h2 id="paused-title">Paused</h2>
+        <a href="#" class="button" id="resume-level-button"><span>Resume Level</span></a>
+        <a href="#" class="button" id="quit-level-button"><span>Quit Level</span></a>
+    </div>
+
+    <div id="upgrades-levels" class="menu">
+        <p id="funds">$0</p>
+        <h2>Upgrades</h2>
+        <div class="up-list clearfix">
+            <div class="upgrade-group">
+                <a href="#" class="upgrade button disabled  upg0" data-parent="power" data-specific="capacity">
+							<span class="clearfix">
+								<div class="title">Power Capacity</div>
+								<div class="cost">$100 - <i class="unavailable">Unavailable</i></div>
+								<div class="lev lev1"></div>
+								<div class="lev lev2"></div>
+								<div class="lev lev3"></div>
+								<div class="lev lev4"></div>
+								<div class="lev lev5"></div>
+								<div class="value lev0">100px Total</div>
+								<div class="value lev1">200px Total</div>
+								<div class="value lev2">350px Total</div>
+								<div class="value lev3">500px Total</div>
+								<div class="value lev4">750px Total</div>
+								<div class="value lev5">1000px Total</div>
+								<p class="tip">Increases the capacity of your power, which is used to create defensive lines.</p>
+							</span>
+                </a>
+                <a href="#" class="upgrade button disabled  upg0" data-parent="power" data-specific="generation">
+							<span class="clearfix">
+								<div class="title">Power Generation</div>
+								<div class="cost">$100 - <i class="unavailable">Unavailable</i></div>
+								<div class="lev lev1"></div>
+								<div class="lev lev2"></div>
+								<div class="lev lev3"></div>
+								<div class="lev lev4"></div>
+								<div class="lev lev5"></div>
+								<div class="value lev0">30px/Second</div>
+								<div class="value lev1">60px/Second</div>
+								<div class="value lev2">90px/Second</div>
+								<div class="value lev3">120px/Second</div>
+								<div class="value lev4">150px/Second</div>
+								<div class="value lev5">180px/Second</div>
+								<p class="tip">Increases the generation of your power, which is used to create defensive lines.</p>
+							</span>
+                </a>
+            </div>
+            <div class="upgrade-group">
+                <a href="#" class="upgrade button disabled  upg0" data-parent="base" data-specific="resistance">
+							<span class="clearfix">
+								<div class="title">Base Resistance</div>
+								<div class="cost">$100 - <i class="unavailable">Unavailable</i></div>
+								<div class="lev lev1"></div>
+								<div class="lev lev2"></div>
+								<div class="lev lev3"></div>
+								<div class="lev lev4"></div>
+								<div class="lev lev5"></div>
+								<div class="value lev0">0 Damage</div>
+								<div class="value lev1">-1 Damage</div>
+								<div class="value lev2">-2 Damage</div>
+								<div class="value lev3">-3 Damage</div>
+								<div class="value lev4">-4 Damage</div>
+								<div class="value lev5">-5 Damage</div>
+								<p class="tip">Increases the resistance of your base, which decreases damage from enemy lines.</p>
+							</span>
+                </a>
+                <a href="#" class="upgrade button disabled  upg0" data-parent="base" data-specific="generation">
+							<span class="clearfix">
+								<div class="title">Base Generation</div>
+								<div class="cost">$100 - <i class="unavailable">Unavailable</i></div>
+								<div class="lev lev1"></div>
+								<div class="lev lev2"></div>
+								<div class="lev lev3"></div>
+								<div class="lev lev4"></div>
+								<div class="lev lev5"></div>
+								<div class="value lev0">1.2px/Second</div>
+								<div class="value lev1">1.8px/Second</div>
+								<div class="value lev2">2.4px/Second</div>
+								<div class="value lev3">3px/Second</div>
+								<div class="value lev4">3.6px/Second</div>
+								<div class="value lev5">4.2px/Second</div>
+								<p class="tip">Increases the generation of your base, allowing it to reach its target radius faster.</p>
+							</span>
+                </a>
+            </div>
+            <div class="upgrade-group">
+                <a href="#" class="upgrade button disabled  upg0" data-parent="powerups" data-specific="chance">
+							<span class="clearfix">
+								<div class="title">Powerup Chance</div>
+								<div class="cost">$50 - <i class="unavailable">Unavailable</i></div>
+								<div class="lev lev1"></div>
+								<div class="lev lev2"></div>
+								<div class="lev lev3"></div>
+								<div class="lev lev4"></div>
+								<div class="lev lev5"></div>
+								<div class="value lev0">2% Chance</div>
+								<div class="value lev1">3% Chance</div>
+								<div class="value lev2">4% Chance</div>
+								<div class="value lev3">5% Chance</div>
+								<div class="value lev4">6% Chance</div>
+								<div class="value lev5">7% Chance</div>
+								<p class="tip">Increases the chance of enemy lines dropping powerups.</p>
+							</span>
+                </a>
+                <a href="#" class="upgrade button disabled  upg0" data-parent="powerups" data-specific="duration">
+							<span class="clearfix">
+								<div class="title">Powerup Duration</div>
+								<div class="cost">$50 - <i class="unavailable">Unavailable</i></div>
+								<div class="lev lev1"></div>
+								<div class="lev lev2"></div>
+								<div class="lev lev3"></div>
+								<div class="lev lev4"></div>
+								<div class="lev lev5"></div>
+								<div class="value lev0">3 Seconds</div>
+								<div class="value lev1">3.5 Seconds</div>
+								<div class="value lev2">4 Seconds</div>
+								<div class="value lev3">4.5 Seconds</div>
+								<div class="value lev4">5 Seconds</div>
+								<div class="value lev5">5.5 Seconds</div>
+								<p class="tip">Increases the duration of powerups.</p>
+							</span>
+                </a>
+            </div>
+            <div class="upgrade-group">
+                <a href="#" class="upgrade button disabled  upg0" data-parent="magnet" data-specific="range">
+							<span class="clearfix">
+								<div class="title">Magnet Range</div>
+								<div class="cost">$50 - <i class="unavailable">Unavailable</i></div>
+								<div class="lev lev1"></div>
+								<div class="lev lev2"></div>
+								<div class="lev lev3"></div>
+								<div class="lev lev4"></div>
+								<div class="lev lev5"></div>
+								<div class="value lev0">50px Radius</div>
+								<div class="value lev1">100px Radius</div>
+								<div class="value lev2">150px Radius</div>
+								<div class="value lev3">200px Radius</div>
+								<div class="value lev4">300px Radius</div>
+								<div class="value lev5">400px Radius</div>
+								<p class="tip">Increases the range of your magnet, which collects coins and powerups.</p>
+							</span>
+                </a>
+                <a href="#" class="upgrade button disabled  upg0" data-parent="magnet" data-specific="power">
+							<span class="clearfix">
+								<div class="title">Magnet Power</div>
+								<div class="cost">$50 - <i class="unavailable">Unavailable</i></div>
+								<div class="lev lev1"></div>
+								<div class="lev lev2"></div>
+								<div class="lev lev3"></div>
+								<div class="lev lev4"></div>
+								<div class="lev lev5"></div>
+								<div class="value lev0">60px/Second</div>
+								<div class="value lev1">120px/Second</div>
+								<div class="value lev2">180px/Second</div>
+								<div class="value lev3">240px/Second</div>
+								<div class="value lev4">300px/Second</div>
+								<div class="value lev5">360px/Second</div>
+								<p class="tip">Increases the power of your magnet, which collects coins and powerups.</p>
+							</span>
+                </a>
+            </div>
+            <div class="upgrade-group last">
+                <a href="#" class="upgrade button disabled  upg0" data-parent="coins" data-specific="chance">
+							<span class="clearfix">
+								<div class="title">Coin Chance</div>
+								<div class="cost">$50 - <i class="unavailable">Unavailable</i></div>
+								<div class="lev lev1"></div>
+								<div class="lev lev2"></div>
+								<div class="lev lev3"></div>
+								<div class="lev lev4"></div>
+								<div class="lev lev5"></div>
+								<div class="value lev0">50% Chance</div>
+								<div class="value lev1">55% Chance</div>
+								<div class="value lev2">60% Chance</div>
+								<div class="value lev3">65% Chance</div>
+								<div class="value lev4">70% Chance</div>
+								<div class="value lev5">75% Chance</div>
+								<p class="tip">Increases the chance of enemy lines dropping coins.</p>
+							</span>
+                </a>
+                <a href="#" class="upgrade button disabled  upg0" data-parent="coins" data-specific="amount">
+							<span class="clearfix">
+								<div class="title">Coin Amount</div>
+								<div class="cost">$50 - <i class="unavailable">Unavailable</i></div>
+								<div class="lev lev1"></div>
+								<div class="lev lev2"></div>
+								<div class="lev lev3"></div>
+								<div class="lev lev4"></div>
+								<div class="lev lev5"></div>
+								<div class="value lev0">1 Coin</div>
+								<div class="value lev1">1-2 Coins</div>
+								<div class="value lev2">1-3 Coins</div>
+								<div class="value lev3">1-4 Coins</div>
+								<div class="value lev4">1-5 Coins</div>
+								<div class="value lev5">1-6 Coins</div>
+								<p class="tip">Increases the amount of coins dropped by enemy lines.</p>
+							</span>
+                </a>
+            </div>
+        </div>
+        <div class="divider"></div>
+        <p id="level-status">
+            <strong><span id="completed-levels">0</span>/12</strong> Completed - <em><strong><span id="perfect-levels">0</span>/12</strong> Perfect</em>
+        </p>
+        <h2>Levels <span class="level-notes">i<p class="tip">Best scores are shown for each level. <strong>Lower is better.</strong> Levels marked with a "P", for Perfect, were beaten without any base hits.</p></span></h2>
+        <div class="level-list clearfix">
+            <div class="level-wrap">
+                <a href="#" rel="0" class="level button"><span>1<i>P</i><small class="level-score">∅</small></span><p class="tip">"Noobs Welcome"<br><strong>$5</strong>/Coin</p></a>
+            </div>
+            <div class="level-wrap">
+                <a href="#" rel="1" class="level button disabled"><span>2<i>P</i><small class="level-score">∅</small></span><p class="tip">"No Sweat"<br><strong>$10</strong>/Coin</p></a>
+            </div>
+            <div class="level-wrap">
+                <a href="#" rel="2" class="level button disabled"><span>3<i>P</i><small class="level-score">∅</small></span><p class="tip">"Yep, Still Easy"<br><strong>$15</strong>/Coin</p></a>
+            </div>
+            <div class="level-wrap">
+                <a href="#" rel="3" class="level button disabled"><span>4<i>P</i><small class="level-score">∅</small></span><p class="tip">"Piece of Cake"<br><strong>$20</strong>/Coin</p></a>
+            </div>
+            <div class="level-wrap">
+                <a href="#" rel="4" class="level button disabled"><span>5<i>P</i><small class="level-score">∅</small></span><p class="tip">"You Got This"<br><strong>$25</strong>/Coin</p></a>
+            </div>
+            <div class="level-wrap">
+                <a href="#" rel="5" class="level button disabled"><span>6<i>P</i><small class="level-score">∅</small></span><p class="tip">"Ok, Some Sweat"<br><strong>$30</strong>/Coin</p></a>
+            </div>
+            <div class="level-wrap">
+                <a href="#" rel="6" class="level button disabled"><span>7<i>P</i><small class="level-score">∅</small></span><p class="tip">"Beware"<br><strong>$35</strong>/Coin</p></a>
+            </div>
+            <div class="level-wrap">
+                <a href="#" rel="7" class="level button disabled"><span>8<i>P</i><small class="level-score">∅</small></span><p class="tip">"Lots of Sweat"<br><strong>$40</strong>/Coin</p></a>
+            </div>
+            <div class="level-wrap">
+                <a href="#" rel="8" class="level button disabled"><span>9<i>P</i><small class="level-score">∅</small></span><p class="tip">"Clickfest"<br><strong>$45</strong>/Coin</p></a>
+            </div>
+            <div class="level-wrap">
+                <a href="#" rel="9" class="level button disabled"><span>10<i>P</i><small class="level-score">∅</small></span><p class="tip">"Don't Break Your Mouse"<br><strong>$50</strong>/Coin</p></a>
+            </div>
+            <div class="level-wrap">
+                <a href="#" rel="10" class="level button disabled"><span>11<i>P</i><small class="level-score">∅</small></span><p class="tip">"No Light at the End<br>of the Carpal Tunnel"<br><strong>$55</strong>/Coin</p></a>
+            </div>
+            <div class="level-wrap">
+                <a href="#" rel="11" class="level button disabled"><span>12<i>P</i><small class="level-score">∅</small></span><p class="tip">"Hope You're Not as<br>Sensitive as Your Mouse"<br><strong>$60</strong>/Coin</p></a>
+            </div>
+        </div>
+        <div class="divider"></div>
+        <a href="#" class="button" id="return-to-menu-button"><span>Return to Menu</span></a>
+    </div>
+
+    <div id="level-stats" class="menu">
+        <h2 id="stats-status"></h2>
+        <table>
+            <tbody><tr>
+                <th colspan="2">Level Stats</th>
+            </tr>
+            <tr>
+                <td>Duration:</td>
+                <td id="stats-duration"></td>
+            </tr>
+            <tr>
+                <td>Lines Created:</td>
+                <td id="stats-lines-created"></td>
+            </tr>
+            <tr>
+                <td>Total Line Length:</td>
+                <td id="stats-total-line-length"></td>
+            </tr>
+            <tr>
+                <td>Base Hits:</td>
+                <td id="stats-base-hits"></td>
+            </tr>
+            <tr>
+                <td>Powerups Collected:</td>
+                <td id="stats-powerups-collected"></td>
+            </tr>
+            <tr>
+                <td>Coins Collected:</td>
+                <td id="stats-coins-collected"></td>
+            </tr>
+            <tr>
+                <td>Profit:</td>
+                <td id="stats-profit"></td>
+            </tr>
+            <tr>
+                <td>Score:</td>
+                <td id="stats-score"></td>
+            </tr>
+            </tbody></table>
+        <div class="divider"></div>
+        <a href="#" class="button" id="retry-level-button"><span>Retry Level</span></a>
+        <a href="#" class="button" id="return-to-upgrades-levels-button"><span>Return to Upgrades/Levels</span></a>
+    </div>
+    <div id="overall-stats" class="menu">
+        <h1><strong>Space</strong>Pi</h1>
+        <div class="divider"></div>
+        <table>
+            <tbody><tr>
+                <th colspan="2">Overall Stats</th>
+            </tr>
+            <tr>
+                <td>Total Lines Created:</td>
+                <td id="overall-lines-created">0</td>
+            </tr>
+            <tr>
+                <td>Total Line Length:</td>
+                <td id="overall-line-length">0 <em class="td-note">(pixels)</em><br><em class="td-note">That's</em> 0.0 <em class="td-note">feet at 72ppi</em></td>
+            </tr>
+            <tr>
+                <td>Total Base Hits:</td>
+                <td id="overall-base-hits">0</td>
+            </tr>
+            <tr>
+                <td>Total Levels Played:</td>
+                <td id="overall-levels-played">0</td>
+            </tr>
+            <tr>
+                <td>Total Time Played:</td>
+                <td id="overall-time-played">0:00 <em class="td-note">(minutes:seconds)</em></td>
+            </tr>
+            </tbody></table>
+        <div class="divider"></div>
+        <a href="#" class="button" id="return-to-menu-button2"><span>Return to Menu</span></a>
+    </div>
+    <canvas id="c" height="600" width="960"></canvas>
+</div><!-- end #game-wrap -->
+<script src="js/jquery.min.js"></script>
+<script src="js/audio.js"></script>
+<script src="js/raf.js"></script>
+<script src="js/spacepi.js"></script>
+<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', 'UA-5693606-7', 'auto');
+    ga('send', 'pageview');
+</script>
+</body></html>

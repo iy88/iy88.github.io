@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<link href="https://fonts.googleapis.com/css?family=Monoton" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+<link id="s1" rel="stylesheet" type="text/css" href="../css/401.1.css"/>
+<svg viewBox="0 0 960 300">
+    <symbol id="s-text">
+        <text text-anchor="middle" x="50%" y="80%">401.1</text>
+    </symbol>
+
+    <g class = "g-ants">
+        <use xlink:href="#s-text" class="text"></use>
+        <use xlink:href="#s-text" class="text"></use>
+        <use xlink:href="#s-text" class="text"></use>
+        <use xlink:href="#s-text" class="text"></use>
+        <use xlink:href="#s-text" class="text"></use>
+    </g>
+</svg>
+<div class="content">
+    <h1>401.1</h1>
+    <script>
+        function on(){
+            clearAllCookie();
+            window.location.href="login.html";
+        }
+        function clearAllCookie(){
+    let keys=document.cookie.match(/[^ =;]+(?=\=)/g);
+    if (keys) {
+        for (let i = keys.length; i--;)
+            document.cookie=keys[i]+'=0;expires=' + new Date( 0).toUTCString()
+    }
+}
+    </script>
+    <a href="javascript:on()">Back</a>
+</div>
+</body>
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script src="base64.js"></script>
+    <input type="text" id="i" placeholder="input"><br>
+    <input type="text" id="o" placeholder="output"><br>
+    <button onclick="en()">encode</button>
+    <button onclick="de()">decode</button>
+    <script>
+        function en(){
+            let v = document.getElementById('i').value;
+            document.getElementById('o').value=Base64.encode(v);
+        }
+        function de(){
+            let v = document.getElementById('i').value;
+            document.getElementById('o').value=Base64.decode(v);
+        }
+    </script>
+</body>
+</html>

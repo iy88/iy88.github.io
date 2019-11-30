@@ -1,0 +1,275 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>纯JS 2048游戏</title>
+    <script src="https://libs.baidu.com/jquery/1.11.3/jquery.min.js"></script>
+    <style>
+        div {
+            border-radius:20%;
+        }
+        #marks {
+            width:560px;
+            height:50px;
+            background:#ffefdb;
+            margin:auto;
+            line-height:50px;
+            text-align:center;
+        }
+        #mark {
+            width:580px;
+            margin:30px auto;
+            background:#2b2b2b;
+            border-radius:10%;
+        }
+        #box {
+            background:#ffefdb;
+            width:560px;
+            height:560px;
+            margin:30px auto;
+            border-radius:10%;
+        }
+        .bx {
+            background:#EED5B7;
+            width:100px;
+            height:100px;
+            margin:20px;
+            float:left;
+            text-align:center;
+            line-height:100px;
+            font-size:50px;
+        }
+    </style>
+</head>
+<body>
+<div id="mark">
+    <div id="marks">
+        <p>当前分数是：<span id="mark1">0</span></p>
+    </div>
+    <div id="box">
+        <div id="d1" class="bx"></div>
+        <div id="d2" class="bx"></div>
+        <div id="d3" class="bx"></div>
+        <div id="d4" class="bx"></div>
+        <div id="d5" class="bx"></div>
+        <div id="d6" class="bx"></div>
+        <div id="d7" class="bx"></div>
+        <div id="d8" class="bx"></div>
+        <div id="d9" class="bx"></div>
+        <div id="d3" class="bx"></div>
+        <div id="d4" class="bx"></div>
+        <div id="d5" class="bx"></div>
+        <div id="d6" class="bx"></div>
+        <div id="d7" class="bx"></div>
+        <div id="d8" class="bx"></div>
+        <div id="d9" class="bx"></div>
+    </div>
+</div>
+
+<script>
+    alert("使用[A][W][S][D]或[↑][↓][←][→]移动！")
+    var a1 = [];
+    var a2 = [];
+    window.onload = function() {
+        var num = Math.random() * 15 + 1;
+        num = parseInt(num);
+        var dx = document.getElementsByClassName("bx");
+        dx[num].innerText = 2;
+        score();
+
+    }
+    //添加数组相同剔除方法
+    Array.prototype.contains = function(needle) {
+        for (i in this) {
+            if (this[i] == needle) return false
+        }
+        return true;
+    }
+    //递归
+    function recur(dx, i, myX, myC, can) {
+        if (dx[i].innerHTML != "") {
+            if (can.contains(i)) {
+                a1.push(i);
+                if (dx[i + myX].innerHTML == "") { //为空赋值
+                    dx[i + myX].innerText = dx[i].innerHTML;
+                    dx[i].innerText = "";
+                    recur(dx, i + myX, myX, myC, can);
+                } else {
+                    if (dx[i + myX].innerHTML == dx[i].innerHTML) { //值相同合并
+                        dx[i + myX].innerText = parseInt(dx[i].innerHTML) * 2;
+                        dx[i].innerText = "";
+                    } else {
+                        a2.push(i);
+                    }
+                }
+            }
+
+        }
+
+    }
+    //更换背景色
+    function score() {
+        var dx = document.getElementsByClassName("bx");
+        var ma = 0;
+        for (var i = 0; i < dx.length; i++) {
+            if (dx[i].innerHTML != "") {
+                var bk = dx[i].innerHTML;
+                ma = parseInt(bk) + parseInt(ma);
+                switch (bk) {
+                    case "2":
+                        dx[i].style.backgroundColor = "#c7c7c7";
+                        dx[i].style.color = "#000000";
+                        dx[i].style.fontSize = "50px";
+                        break;
+                    case "4":
+                        dx[i].style.backgroundColor = "#c7c7c7";
+                        dx[i].style.color = "#000000";
+                        dx[i].style.fontSize = "50px";
+                        break;
+                    case "8":
+                        dx[i].style.backgroundColor = "orange";
+                        dx[i].style.color = "#FFFFFF";
+                        dx[i].style.fontSize = "50px";
+                        break;
+                    case "16":
+                        dx[i].style.backgroundColor = "orange";
+                        dx[i].style.color = "#FFFFFF";
+                        dx[i].style.fontSize = "50px";
+                        break;
+                    case "32":
+                        dx[i].style.backgroundColor = "orange";
+                        dx[i].style.color = "#FFFFFF";
+                        dx[i].style.fontSize = "50px";
+                        break;
+                    case "64":
+                        dx[i].style.backgroundColor = "orange";
+                        dx[i].style.color = "#FFFFFF";
+                        dx[i].style.fontSize = "50px";
+                        break;
+                    case "128":
+                        dx[i].style.backgroundColor = "#008fff";
+                        dx[i].style.color = "#2dff97";
+                        dx[i].style.fontSize = "50px";
+                        break;
+                    case "256":
+                        dx[i].style.backgroundColor = "green";
+                        dx[i].style.color = "#FFFFFF";
+                        dx[i].style.fontSize = "50px";
+                        break;
+                    case "512":
+                        dx[i].style.backgroundColor = "cyan";
+                        dx[i].style.color = "#FFFFFF";
+                        dx[i].style.fontSize = "50px";
+                        break;
+                    case "1024":
+                        dx[i].style.backgroundColor = "darkblue";
+                        dx[i].style.color = "#FFFFFF";
+                        dx[i].style.fontSize = "30px";
+                        break;
+                    case "2048":
+                        dx[i].style.backgroundColor = "#bf3eff";
+                        dx[i].style.color = "#2dff97";
+                        dx[i].style.fontSize = "30px";
+                        break;
+                    case "4096":
+                        dx[i].style.backgroundColor = "#2b2b2b";
+                        dx[i].style.color = "#FFFFFF";
+                        dx[i].style.fontSize = "30px";
+                        break;
+                }
+            } else {
+                dx[i].style.backgroundColor = "#EED5B7";
+                dx[i].style.color = "#000000";
+                dx[i].style.fontSize = "50px";
+            }
+        }
+        document.getElementById("mark1").innerText = ma;
+
+    }
+
+    //方向
+    function about(dx, myX, myC, can) {
+        for (var i = 0; i < myC * myC; i++) {
+            recur(dx, i, myX, myC, can);
+        }
+        //检查是否有遗漏
+        for (var i = 0; i < myC; i++) {
+            for (var j = 0; j < myC * myC; j++) {
+                recur(dx, j, myX, myC, can);
+            }
+        }
+        if (a1.length != a2.length) {
+            var fuc = [];
+            for (var j = 0; j < myC * myC; j++) {
+                if (dx[j].innerHTML == "") {
+                    fuc.push(j);
+                }
+            }
+            var index = Math.floor((Math.random() * fuc.length));
+            dx[fuc[index]].innerText = 2;
+            fuc.splice(0, fuc.length);
+            a1.splice(0, a1.length);
+            a2.splice(0, a2.length);
+        }
+        for (var i = 0; i < 4; i++) {
+            score();
+        }
+
+
+    }
+
+    //获取键盘键
+    document.onkeydown = function(event) {
+        var e = event || window.event || arguments.callee.caller.arguments[0];
+
+        //向上
+        if (e.keyCode == 87 || e.keyCode == 38) {
+            var dx = document.getElementsByClassName("bx");
+            var can = [];
+            var myT = 0;
+            for (var i = 0; i < 4; i++) {
+                can.push(myT);
+                myT += 1;
+            }
+            about(dx, -4, 4, can);
+        }
+        //向下
+        if (e.keyCode == 83|| e.keyCode == 40) {
+            var dx = document.getElementsByClassName("bx");
+            var can = [];
+            var myT = 12;
+            for (var i = 0; i < 4; i++) {
+                can.push(myT);
+                myT += 1;
+            }
+            about(dx, 4, 4, can)
+        }
+        //向左
+        if (e.keyCode == 65|| e.keyCode == 37) {
+            var dx = document.getElementsByClassName("bx");
+            var can = [];
+            var myT = 0;
+            for (var i = 0; i < 4; i++) {
+                can.push(myT);
+                myT += 4;
+            }
+            about(dx, -1, 4, can)
+        }
+        //向右
+        if (e.keyCode == 68|| e.keyCode == 39) {
+            var dx = document.getElementsByClassName("bx");
+            var can = [];
+            var myT = 3;
+            for (var i = 0; i < 4; i++) {
+                can.push(myT);
+                myT += 4;
+            }
+            about(dx, 1, 4, can)
+        }
+        var dx = document.getElementsByClassName("bx");
+
+    }
+</script>
+
+</body>
+</html>

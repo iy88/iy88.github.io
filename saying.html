@@ -1,0 +1,31 @@
+﻿<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>web语音播报-jq22.com</title>
+    <script></script>
+    <style>
+    </style>
+</head>
+
+<body>
+    <input type="text" id="ttsText" value="hello world">
+    <input type="button" id="tts_btn" onclick="doTTS()" value="播放">
+
+
+    <script>
+        function doTTS() {
+            var mess = document.getElementById('ttsText').value;
+            var msg = new SpeechSynthesisUtterance(mess);
+            msg.volume = 100;
+            msg.rate = 1;
+            msg.pitch = 2;
+            console.log(msg);
+            window.speechSynthesis.speak(msg);
+        }
+    </script>
+
+</body>
+
+</html>

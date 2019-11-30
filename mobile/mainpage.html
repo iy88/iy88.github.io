@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="baidu-site-verification" content="P4xq32RRIP" />
+    <title id="title">mwp</title>
+</head>
+<body>
+    <link rel="stylesheet" href="../css/mainpage-mobile.css">
+    <nav id="nav">
+        <icon class="icon">^—^</icon>
+        <button id="index" onclick="main()">home</button>
+        <button id="code" onclick="code()">program</button>
+        <button id="games" onclick="games()">H5games</button>
+        <input type="submit"id="bsearch" value="search" onclick="s()" title="input name">
+        <input id="search" value="" name="word" placeholder="search something..." autocomplete="off" type="search">
+    </nav>
+    <br>
+    <main>
+        <center id="c">
+            loading please wait
+        </center>
+        <div id="dindex" style="margin-top:260px; display: none">
+            <h1 align="center">Welcome</h1>
+        </div>
+        <div id="dcode" style="display: none">
+            <h1>Recommendations for web learning:</h1>
+            <p>
+                Kevin060103's web site: <a href="https://Kevin060103.github.io">web site</a><br>
+                JavaScript: <a href="https://www.bilibili.com/video/av64563473">video</a><br>
+                Html&Css: <a href="https://www.bilibili.com/video/av21786264">video</a><br>
+                Web front-end as a whole: <a href="https://www.bilibili.com/video/av45705742">video</a><br>
+                2D code making: <a href="../code.html">making</a><br>
+                the web reader: <a href="../saying.html"></a><br>
+            </p>
+        </div>
+        <div id="dgames" style="display: none">
+            <h1>Little game:</h1>
+            <p>
+                The recommended website for JavaScript games:&nbsp;<a href="http://js13kgames.com/entries">http://js13kgames.com/entries</a><br>
+            </p>
+        </div>
+    </main>
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?934f809f6a6c3bb4b24d46b221f0045b";
+          var s = document.getElementsByTagName("script")[0]; 
+          s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+    <script src="../script/jquery-3.4.1.min.js"></script>
+    <script src="../script/search.min.js"></script>
+    <script src="../script/game.min.js"></script>
+    <script>
+        window.onload = function () {
+        if(getCookie("admin") != 1 && getCookie("user") != 1){
+            window.location.href="login.html";
+        }
+        document.getElementById('c').style.display='none';
+        document.getElementById('dindex').style.display = 'block';
+    }
+    window.onbeforeunload = function(){
+        if(getCookie("developer") != 1){
+            setCookie("admin",0,-2000);
+        }
+        if(getCookie("cookiebool") != 1){
+            setCookie("user",0,-2000);
+        }
+    }
+        function main() {
+            if(document.getElementById('c').style.display != 'none'){
+                alert("Wait for loading")
+            }else{
+                $('#dcode').fadeOut(500);
+                $('#dgames').fadeOut(500);
+                $('#search').fadeOut(500);
+                $('#bsearch').fadeOut(500);
+                $('#select').fadeOut(500);
+                $('#dindex').fadeIn(500);
+            }
+        }
+        function code() {
+            if(document.getElementById('c').style.display != 'none'){
+                alert("Wait for loading")
+            }else{
+                $('#dgames').fadeOut(500);
+                $('#search').fadeOut(500);
+                $('#bsearch').fadeOut(500);
+                $('#select').fadeOut(500);
+                $('#dindex').fadeOut(500);
+                $('#dcode').fadeIn(500);
+            }
+        }
+        function games() {
+            if(document.getElementById('c').style.display != 'none'){
+                alert("Wait for loading")
+            }else{
+                $('#dcode').fadeOut(500);
+                $('#dindex').fadeOut(500);
+                $('#dgames').fadeIn(500);
+                $('#search').fadeIn(500);
+                $('#bsearch').fadeIn(500);
+                $('#select').fadeIn(500);
+            }
+        }
+        function s() {
+            if(document.getElementById('c').style.display != 'none'){
+                alert("Wait for loading");                
+            }else{
+                let keyword = document.getElementById('search').value;  
+                if(keyword.length > 0 && keyword != ""){
+                    let max = searchgame(`${keyword}`).best;
+                    let min = searchgame(`${keyword}`).msindexs;
+                    console.log("MatchingSearch Run");
+                    if(max.length > 0){
+                        document.write("<p>PerfectlyMatchingSearchResult:</p>");
+                        document.write("<a href=" +"../"+eth_href[max[0]] + ">" + eth[max[0]] + "</a>");
+                        console.log("Matching success: MatchingSearch");
+                        console.log("Run completed: MatchingSearch");
+                        console.log("ApproximateSearch Run");
+                        if(min.length > 0){
+                            console.log("Matching success: ApproximateSearch");
+                            document.write("<p>ApproximateSearchResultSort:</p>");
+                            for(let i= 0;i<min.length;i++){
+                                document.write("<a href="+"../"+eth_href[min[i]] +">"+eth[min[i]]+"</a><br>");
+                            }
+                            console.log("Run completed: ApproximateSearch");
+                        }else{
+                            console.error("ApproximateSearch: not found");
+                        }
+                        document.write(`<a href='javascript:location.reload()'>back</a>`);
+                    }else{
+                        console.error("MatchingSearch: not found");
+                        console.log("ApproximateSearch Run");
+                        if(min.length > 0){
+                            console.log("Matching success: ApproximateSearch");
+                            document.write("<p>ApproximateSearchResultSort:</p>");
+                            for(let i= 0;i<min.length;i++){
+                                document.write("<a href="+"../"+eth_href[min[i]] +">"+eth[min[i]]+"</a><br>");
+                            }
+                            document.write(`<a href='javascript:location.reload()'>back</a>`);
+                            console.log("Run completed: ApproximateSearch");
+                        }else{
+                            console.error("ApproximateSearch: not found");
+                        }  
+                    }
+                }else{
+                    alert("please input!");
+                }
+            }
+        }
+        function getCookie(cname) {
+            let name = cname + "=";
+            let ca = document.cookie.split(';');
+            for (let i = 0; i < ca.length; i++) {
+                let c = ca[i].trim();
+                if (c.indexOf(name) == 0) return c.substring(name.length, c.length);
+            }
+            return "";
+        }
+        function setCookie(cname,cvalue,exdays){
+            let d = new Date();
+            d.setTime(d.getTime()+(exdays*24*60*60*1000));
+            let expires = "expires="+d.toGMTString();
+            document.cookie = cname + "=" + cvalue + "; " + expires;
+        }
+    </script>
+</body>
+</body>
+</html>

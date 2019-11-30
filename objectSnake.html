@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8" />
+		<title>十五分真男人</title>
+	</head>
+	<body>
+		<script src="tancheshe/jquery/jquery-2.1.1.js"></script>
+		<canvas id="canvas" width="1200" height="550"> </canvas>
+		
+		<script>
+			var canvas = document.getElementById("canvas");
+			var ctx = canvas.getContext("2d");
+			var width = canvas.width;
+			var height = canvas.height;
+			
+			
+			
+			
+			//将画布划分为块
+			var blockSize = 10;
+			var widthInBlocks = width / blockSize;
+			var heightInBlocks =height / blockSize;
+			
+			//定义score变量
+			var score = 0;
+			var num = 0;
+			
+			//绘制边框
+			var drawBorder = function(){
+				ctx.fillStyle = "gray";
+				ctx.fillRect(0, 0, width, blockSize);
+				ctx.fillRect(0, height - blockSize, width, blockSize);
+				ctx.fillRect(0, 0, blockSize, height);
+				ctx.fillRect(width - blockSize, 0, blockSize, height);
+			}
+			
+			
+			//显示分数
+			var drawScore = function(){
+				ctx.font = "20px Courier";
+				ctx.fillStyle = "Black";
+				ctx.textAlign = "left";
+				ctx.textBaseline = "top";
+				ctx.fillText("Score:"+score,blockSize,blockSize);
+			}
+			
+			
+			//游戏结束
+			var gameOver = function(){
+				//clearInterval(intervalId);
+				isGo = false;
+				//clearTimeout(setTimeout(gameLoop, animationTime));
+				//ctx.font = "60px Courier";
+				ctx.fillStyle = "Black";
+				ctx.textAlign = "center";
+				ctx.textBaseline = "middle";
+				
+				//让GAMEOVER的颜色随机
+				var colors = ["blue","black","red","green","purple","skyblue"];
+				var color = colors[Math.floor(Math.random()*colors.length)];
+				var n = "Haha Man!!!"
+				for(var i = 0; i < n.length; i++){
+					ctx.fillStyle = color;
+				}
+				if(score > 20|| score < 40){
+					ctx.font = "60px Courier";
+					ctx.fillText("Good Man", width / 2, height / 2);
+					ctx.font = "20px Courier";
+					ctx.fillText("您一共吃了"+num+"个",500,2*blockSize);
+				}else if(score > 40 ){ 
+					ctx.font = "60px Courier";
+					ctx.fillText("Super Man",width / 2, height / 2);
+					ctx.font = "20px Courier";
+					ctx.fillText("您一共吃了"+num+"个",500,2*blockSize);
+				}else {
+					ctx.font = "60px Courier";
+					ctx.fillText(n, width / 2, height / 2);
+					ctx.font = "20px Courier";
+					ctx.fillText("您一共吃了"+num+"个",500,2*blockSize);
+				}  
+				 
+			}
+			
+			
+			//构建Block构造方法
+			//它会创建对象表示不可见的网格中的单个的块
+			
+			var Block = function(col, row){
+				this.col = col;
+				this.row = row;
+			}		
+			
+			
+			//添加drawSquare方法
+			Block.prototype.drawSquare = function(color){
+				var x = this.col * blockSize;
+				var y = this.row * blockSize;
+				ctx.fillStyle = color;
+				ctx.fillRect(x, y, blockSize, blockSize);
+			}
+			
+			//var sampleBlock = new Block(3, 4);
+			//sampleBlock.drawSquare("Blue");
+			
+			var circle = function(x, y, r, fillCircle){
+				ctx.beginPath();
+				ctx.arc(x, y, r, 0, Math.PI * 2, false);
+				if(fillCircle){
+					ctx.fill();
+				}else{
+					ctx.stroke();
+				}
+			}
+			
+			//添加drawCircle方法
+			Block.prototype.drawCircle = function(color){
+				var centerX = this.col * blockSize + blockSize / 2;
+				var centerY = this.row * blockSize + blockSize / 2;
+				ctx.fillStyle = color;
+				circle(centerX, centerY, blockSize / 2, true);
+			}
+			
+			//var simpleCircle = new Block(4, 3);
+			//simpleCircle.drawCircle("lightBlue");
+			
+			Block.prototype.equal = function(otherBlock){
+				return this.col === otherBlock.col && this.row === otherBlock.row;
+			}
+			
+			
+			// var apple = new Block(2, 5);
+			// var head = new Block(3, 5);
+			// alert(head.equal(apple));
+			
+			//编写Snake构造方法
+			var Snake = function(){
+				this.segments = [
+					new Block(7, 5),
+					new Block(6, 5),
+					new Block(5, 5)
+				];
+				this.direction = "right";
+				this.nextDirection = "right";
+			}
+			
+			
+			Snake.prototype.draw = function(){
+				//蛇的头为绿色，身体为蓝黄相间
+				this.segments[0].drawSquare("green");
+				for (var i = 1; i < this.segments.length; i += 2) {
+				  this.segments[i].drawSquare("blue");
+				};
+				for (var i = 2; i < this.segments.length; i += 2) {
+				  this.segments[i].drawSquare("orange");
+				};
+			}
+			
+			// var snake = new Snake();
+			// setInterval(function(){
+				// snake.draw();
+			// },10)
+			
+			Snake.prototype.move = function(){
+				var head = this.segments[0];
+				var newHead;
+				
+				this.direction = this.nextDirection;
+				
+				if(this.direction === "right"){
+					newHead = new Block(head.col + 1, head.row);
+				}else if(this.direction === "down"){
+					newHead = new Block(head.col, head.row + 1);
+				}else if(this.direction === "left"){
+					newHead = new Block(head.col - 1, head.row);
+				}else if(this.direction === "up"){
+					newHead = new Block(head.col, head.row - 1);
+				}else if(this.direction === "space"){
+					return;
+				}
+				
+				if(this.checkCollision(newHead)){
+					gameOver();
+					return;
+				}
+				
+				//向头部添加元素
+				this.segments.unshift(newHead);
+				
+				if(newHead.equal(apple.position)){
+					score++;
+					num++;
+					apple.move();
+					animationTime -= 8;
+				}else{
+					this.segments.pop();
+				}
+				
+			}
+			
+			
+			//添加checkCollision方法
+			Snake.prototype.checkCollision = function(head){
+				var leftCollision = (head.col ===0);
+				var topCollision = (head.row === 0);
+				var rightCollision = (head.col === widthInBlocks -1);
+				var bottomCollision = (head.row === heightInBlocks -1);
+				
+				var wallCollision = leftCollision || topCollision || rightCollision || bottomCollision;
+				
+				var selfCollision = false;
+				
+				for (var i=0; i < this.segments.length; i++) {
+				  if(head.equal(this.segments[i])){
+				  	selfCollision = true;
+				  }
+				}
+				return wallCollision || selfCollision;
+			}
+			
+			//添加setDirection方法
+			Snake.prototype.setDirection = function(newDirection){
+				if(this.direction === "up" && newDirection === "down"){
+					return;
+				}else if(this.direction === "right" && newDirection === "left"){
+					return;
+				}else if(this.direction === "down" && newDirection === "up"){
+					return;
+				}else if(this.direction === "left" && newDirection === "right"){
+					return;
+				}
+				
+				this.nextDirection = newDirection;
+			}
+			
+			//创建苹果的构造方法
+			var Apple = function(){
+				this.position = new Block(10, 10);
+			}
+			
+			//画苹果
+			Apple.prototype.draw = function(){
+				this.position.drawCircle("skyblue");
+			}
+			
+			//移动苹果
+			Apple.prototype.move = function(){
+				var randomCol = Math.floor(Math.random()*(widthInBlocks - 2)) + 1;
+				var randomRow = Math.floor(Math.random()*(heightInBlocks - 2)) + 1;
+				this.position = new Block(randomCol, randomRow);
+				//如何判断苹果移动的当前位置不是贪食蛇的一部分
+			}
+			
+			var snake = new Snake();
+			var apple = new Apple();
+			
+			//声明变量表示定时器在什么时候打断
+			var isGo = true;
+			
+			//创建定时器实现游戏动画
+			// var intervalId = setInterval(function(){
+				// ctx.clearRect(0, 0, width, height);
+				// drawScore();
+				// snake.move();
+				// snake.draw();
+				// apple.draw();
+				// //apple.move();
+				// drawBorder();
+			// },100);
+			
+			
+			var animationTime = 100;
+			var gameLoop = function(){
+				ctx.clearRect(0, 0, width, height);
+				drawScore();
+				snake.move();
+				snake.draw();
+				apple.draw();
+				//apple.move();
+				drawBorder();
+				if(!isGo){
+					return;
+				}
+				
+				setTimeout(gameLoop, animationTime);; 
+				//console.log(timeoutId);
+			}
+			
+			gameLoop();
+			
+			
+			//添加keydown事件处理程序
+			var directions = {
+				37: "left",
+				38: "up",
+				39: "right",
+				40: "down",
+				32: "space",
+				87: "up",
+				65: "left",
+				83: "down",
+				68: "right"
+			};
+			
+			$("body").keydown(function(event){
+				var newDirection = directions[event.keyCode];
+				if(newDirection !== undefined){
+					snake.setDirection(newDirection);
+				}
+			});
+			
+		</script>
+	</body>
+</html>

@@ -1,0 +1,64 @@
+<html>
+<head>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="baidu-site-verification" content="P4xq32RRIP" />
+   <title>please wait</title>
+</head>
+<body>
+    <link id="s1" rel="stylesheet" type="text/css" href="css/loading.css"/>
+    <center id="c">
+        loading
+    </center>
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?934f809f6a6c3bb4b24d46b221f0045b";
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(hm, s);
+        })();
+        </script>
+    <script>
+        let i = 0;
+        let element = document.getElementById('c');
+        setInterval(function(){
+            switch(i){
+                case 0:
+                c.innerText = "loading";
+                break;
+                case 1:
+                c.innerText = "loading.";
+                break;
+                case 2:
+                c.innerText = "loading..";
+                break;
+                case 3:
+                c.innerText = "loading...";
+                break;
+                case 4:
+                c.innerText = "loading....";
+                break;
+                case 5:
+                c.innerText = "loading.....";
+                break;
+                case 6:
+                c.innerText = "loading......";
+                i = 0;
+                break;
+            }
+            i++;
+        },100);
+    </script>
+    <script src="script/loading.min.js"></script>
+    <script src="script/login-pc.min.js"></script>
+    <script>
+        if(browserRedirect()){
+            window.location.href="./mobile/login.html";
+        }else{
+            window.location.href="./pc/login.html";
+        }
+    </script>
+</body>
+</html>

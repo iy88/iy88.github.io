@@ -1,0 +1,103 @@
+body{
+    background-color: black;
+    font-family: 'Courier New';
+    font-size: 10px;
+}
+#input{
+   width: 200px;
+   font-size: 100x;
+}
+
+#Num1{
+    width: 50px;
+    height: 50px;
+}
+
+#Num2{
+    width: 50px;
+    height: 50px;
+}
+
+#Num3{
+    width: 50px;
+    height: 50px;
+}
+
+#Num4{
+    width: 50px;
+    height: 50px;
+}
+
+#Num5{
+    width: 50px;
+    height: 50px;
+}
+
+#Num6{
+    width: 50px;
+    height: 50px;
+}
+
+#Num7{
+    width: 50px;
+    height: 50px;
+}
+
+#Num8{
+    width: 50px;
+    height: 50px;
+}
+
+#Num9{
+    width: 50px;
+    height: 50px;
+}
+
+#Num0{
+    width: 50px;
+    height: 50px;
+}
+
+#C{
+    width: 50px;
+    height: 50px;
+}
+
+#percent{
+    width: 50px;
+    height: 50px;
+}
+
+#except{
+    width: 50px;
+    height: 50px;
+}
+
+#add{
+    width: 50px;
+    height: 50px;
+}
+
+#equal{
+    width: 50px;
+    height: 50px;
+}
+
+#radixpoint{
+    width: 50px;
+    height: 50px;
+}
+
+#minus{
+    width: 50px;
+    height: 50px;
+}
+
+#multiply{
+    width: 50px;
+    height: 50px;
+}
+#Delete{
+    width: 50px;
+    height: 50px;
+}

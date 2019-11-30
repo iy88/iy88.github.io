@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="{CHARSET}">
+    <title>Best Fly Car</title>
+    <style>
+        input {
+            border: 1px solid yellow;
+            margin-left: 20px;
+            margin-top: 20px;
+        }
+
+        .way-content {
+            margin-left: auto;
+            margin-right: auto;
+            width: 1024px;
+            height: 700px;
+            position: relative;
+            border: 1px solid burlywood;
+            background-color: darkolivegreen;
+        }
+
+        .car {
+            color:black;
+            width: 20px;
+            height: 20px;
+            border: 1px solid brown;
+            background: greenyellow;
+            position: absolute;
+            left: 502px;
+            top: 678px;
+            text-align: center;
+            z-index: 99;
+        }
+
+        .C-car {
+            color:black;
+            width: 20px;
+            height: 15px;
+            border: 1px solid brown;
+            background: red;
+            position: absolute;
+            left: 502px;
+            top: 0px;
+            text-align: center;
+            z-index: 98;
+        }
+
+        .way-grid {
+            margin: 0 0;
+            margin-left: 412px;
+            background-color: grey;
+            border: none;
+            border-right: 1px solid brown;
+            border-left: 1px solid brown;
+            min-width: 100px;
+            max-width: 1024px;
+            width: 200px;
+            height: 10px;
+            color: white;
+            font-size: 5px;
+            position: relative;
+            text-align: center;
+        }
+
+        .go {
+            background: greenyellow;
+            width: 100px;
+            height: 50px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<div id="way-content" class="way-content">
+    <div id="car" class="car">++</div>
+</div>
+<br /> The width of the road:<input id="wayWhite" type="number" value="200" /> <br /> Keyboard sensitivity: <input type="number" id="LMD" value="10" /><br /> The game difficulty:<input type="number" id="ND" value="5" /><br />
+<input class="go" id="go" type="button" value="go" /><br />
+<script type="text/javascript">
+    var wayLeft = [],
+        cO = null,
+        LC = null,
+        RC = null,
+        st = null,
+        clickLR = false,
+        s = null,
+        LMD = 5,
+        wayWhite = 200,
+        ND = 15, //n*2+1;
+        NDArry = [0, 1, -1],
+        gridStr = 'way-grid-',
+        PX = 'px',
+        length = 70,
+        NDIndex = 30,
+        waysetIndex = 10,
+        waysetValue = (1024 - wayWhite) / 2,
+        delvalue = 0,
+        n = 5,
+        waitvalue = 10 / n,
+        checkOut = function () {
+            var index = wayLeft[wayLeft.length - 1].wayLeft,
+                CCarvalue = wayLeft[wayLeft.length - 1].CCarvalue + index,
+                carIndex = parseInt(document.getElementById('car').offsetLeft) + 10;
+            if (carIndex < index + wayWhite && carIndex > index && (CCarvalue == 0 || !(CCarvalue < carIndex && CCarvalue + 20 > carIndex))) {
+                return true;
+            } else {
+                clearInterval(st);
+                clearInterval(cO);
+                clearInterval(LC);
+                clearInterval(RC);
+                var e = new Date();
+                alert('totle :' + parseInt((e.getTime() - s.getTime()) / 600) + 's');
+                document.onkeydown = null;
+                document.onkeyup = null;
+                clearInterval(cO);
+                clearInterval(LC);
+                clearInterval(RC);
+            }
+        },
+        //初始道路坐标
+        getFitstArray = function () {
+            waysetValue = (1 - wayWhite) / 2;
+            for (var i = 0; i < length; i++) {
+                wayLeft[i] = {};
+                wayLeft[i].wayLeft = (1024 - wayWhite) / 2;
+            }
+        },
+        //初始化道路
+        setWay = function () {
+            var docElem = document.createDocumentFragment();
+            for (var i = 0; i < length; i++) {
+                var grid = document.createElement('div');
+                grid.className = 'way-grid';
+                grid.id = gridStr + i;
+                grid.textContent = '|';
+                docElem.appendChild(grid);
+            }
+            document.getElementById('way-content').appendChild(docElem);
+
+        },
+        //生成下一个道路
+        getNextL = function (firstL) {
+            var CCarvalue = 0;
+            //渐变道路
+            if (waysetIndex > 1) {
+                waysetIndex -= 1;
+                waysetValue = firstL + delvalue;
+            } else if (waitvalue > 0) {
+                //直线缓冲道路
+                waitvalue--;
+                waysetValue = firstL;
+            } else {
+                //渐变规则
+                delvalue = NDArry[parseInt(Math.random() * 3)] * parseInt(n / 2 + 1);
+                CCarvalue = parseInt(Math.random() * wayWhite);
+                waysetIndex = NDIndex;
+                waitvalue = 100 / n;
+                waysetValue = firstL + delvalue;
+            }
+
+            return waysetValue >= 0 && waysetValue <= (1024 - wayWhite) ? { wayLeft: waysetValue, CCarvalue: CCarvalue } : { wayLeft: firstL, CCarvalue: CCarvalue };
+        },
+        //根据数组刷新道路
+        getWayByArry = function () {
+            var CCarvalueList = document.getElementsByClassName('C-car');
+            while (CCarvalueList[0]) {
+                CCarvalueList[0].remove();
+            }
+            for (var i = 0; i < wayLeft.length; i++) {
+                var grid = document.getElementById(gridStr + i);
+                grid.style['width'] = wayWhite + PX;
+                grid.style['margin-left'] = wayLeft[i].wayLeft + PX;
+                if (wayLeft[i].CCarvalue) {
+                    var CCarvalue = document.createElement('div');
+                    CCarvalue.id = 'CCarvalue' + i;
+                    CCarvalue.className = 'C-car';
+                    CCarvalue.textContent = '+';
+                    CCarvalue.style['left'] = wayLeft[i].CCarvalue + PX;
+                    grid.appendChild(CCarvalue);
+                }
+            }
+        },
+        //左键事件
+        lClick = function () {
+            if (document.onkeydown) {
+                var a = document.getElementById('car')
+                a.style['left'] = (a.offsetLeft - LMD) + PX;
+            }
+        },
+        //右键事件
+        rClick = function () {
+            if (document.onkeydown) {
+                var a = document.getElementById('car')
+                a.style['left'] = (a.offsetLeft + LMD) + PX;
+            }
+        },
+        //确定事件
+        goClick = function () {
+            clearInterval(st);
+            clearInterval(cO);
+            clearInterval(LC);
+            clearInterval(RC);
+            document.onkeydown = null;
+            document.onkeyup = null;
+            LMD = parseInt(document.getElementById('LMD').value) / 4;
+            wayWhite = parseInt(document.getElementById('wayWhite').value);
+            ND = parseInt(document.getElementById('ND').value) * 1 + 1;
+            NDIndex = 30;
+            getFitstArray();
+            getWayByArry();
+            s = new Date();
+            document.onkeydown = function (evt) {
+                var evt = window.event ? window.event : evt;
+                if (clickLR) {
+
+                } else if (evt.keyCode == 37) {
+                    //锁定当前按键
+                    clickLR = true;
+                    LC = setInterval(lClick, 10);
+                } else if (evt.keyCode == 39) {
+                    //锁定当前按键
+                    clickLR = true;
+                    RC = setInterval(rClick, 10);
+                }
+            };
+            document.onkeyup = function (evt) {
+                //清除锁定
+                clickLR = false;
+                clearInterval(LC);
+                clearInterval(RC);
+            }
+            document.getElementById('car').style['left'] = 502 + PX;
+            st = setInterval(stratBC, 100 / ND);
+            cO = setInterval(checkOut, 10);
+        },
+        stratBC = function () {
+            setWayArray();
+            getWayByArry();
+        },
+        setWayArray = function () {
+            var firstL = wayLeft[0],
+                nextL = (1024 - wayWhite) / 2;
+            nextL = getNextL(firstL.wayLeft);
+            for (var i = 0; i < wayLeft.length; i++) {
+                firstL = wayLeft[i];
+                wayLeft[i] = nextL;
+                nextL = firstL;
+            }
+        };
+    getFitstArray();
+    setWay();
+    getWayByArry();
+    document.getElementById('go').onclick = goClick;
+</script>
+</body>
+</html>
