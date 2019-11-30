@@ -1,0 +1,37 @@
+#i,#o{
+    margin: 0px;
+    width: 358px;
+    height: 164px;
+    background: transparent;
+    border-color: slateblue;
+    border-width: 0.1em;
+    border-radius:10px 10px 10px 10px;
+    outline-color: lime;
+    color: rgb(0, 89, 255);
+    font-size: 20px;
+}
+#e,#d{
+    width: 200px;
+    height: 30px;
+    font-size: 20px;
+    border-width: 0.1em;
+    border-color: springgreen;
+    border-radius: 10px 10px 10px 10px;
+    color: rgb(0, 89, 255);
+    background-image: linear-gradient(to right,#00ccff,#00ff0d);
+}
+#e:hover{
+    background-image: linear-gradient(to right, #00ff0d,#00ccff);
+}
+#d:hover{
+    background-image: linear-gradient(to right, #00ff0d,#00ccff);
+}
+body{
+    background: linear-gradient(to right ,#2cff2c,#0edbff) no-repeat;
+    width: auto;
+    height: auto;
+}
+#button{
+    margin-top: 5%;
+    margin-left: 21%;
+}
