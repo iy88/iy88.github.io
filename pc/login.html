@@ -42,27 +42,29 @@
             <div id="login-main" align="center" style="color: #1795e9c9;">
                 <h3>Login</h3>
                 <hr id="hr" align="center" color="yellow" />
-                <div id="u">
-                Username:<input type="text" name="username" id="username" spellcheck="false" placeholder="Username"
-                    value="" autocomplete="off" />
+                <div id="login-from">
+                    <div id="u">
+                    Username:<input type="text" name="username" id="username" spellcheck="false" placeholder="Username"
+                        value="" autocomplete="off" />
+                    </div>
+                    <br>
+                    <div id="p">
+                    Password:<input type="password" name="password" id="password" spellcheck="false" placeholder="Password"
+                        value="" autocomplete="off" />
+                    <input id="display-hide" class="btn" type="button" value="Display/Hide" spellcheck="false"
+                        onclick="d_h()" />
+                    </div>
+                    <br>
+                    <div id="validation-code">
+                        code:<input type="text" id="input-code" placeholder="Validation code" autocomplete="off" />
+                        <input type="button" class="btn" id="code" onclick="createCode()"
+                            title='Click on Replace Verification Code' />
+                    </div>
+                    </br>
+                    <div id="buttons">
+                    <input type="button" class="btn" id="login-button" value="submit" onclick="check()" />
+                    <input type="button" value="admin" id="admin" onclick="admin()" style="display: none" />
                 </div>
-                <br>
-                <div id="p">
-                Password:<input type="password" name="password" id="password" spellcheck="false" placeholder="Password"
-                    value="" autocomplete="off" />
-                <input id="display-hide" class="btn" type="button" value="Display/Hide" spellcheck="false"
-                    onclick="d_h()" />
-                </div>
-                <br>
-                <div id="validation-code">
-                    code:<input type="text" id="input-code" placeholder="Validation code" autocomplete="off" />
-                    <input type="button" class="btn" id="code" onclick="createCode()"
-                        title='Click on Replace Verification Code' />
-                </div>
-                </br>
-                <div id="buttons">
-                <input type="button" class="btn" id="login-button" value="submit" onclick="check()" />
-                <input type="button" value="admin" id="admin" onclick="admin()" style="display: none" />
                 </div>
             </div>
         </main>

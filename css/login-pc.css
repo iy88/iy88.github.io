@@ -170,3 +170,6 @@ input::-webkit-input-placeholder {
 #validation-code{
     margin-top: -19px;
 }
+#login-from{
+    margin-top: 20px;
+}
